@@ -12,6 +12,7 @@
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.9.0",
+    "babel-plugin-espower": "^2.2.0",
     "babel-plugin-syntax-trailing-function-commas": "^6.8.0",
     "babel-plugin-transform-class-properties": "^6.9.1",
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
@@ -22,6 +23,8 @@
     "eslint-import-resolver-node": "^0.2.0",
     "eslint-plugin-import": "^1.8.1",
     "eslint-plugin-jsx-a11y": "^1.2.3",
-    "eslint-plugin-react": "^5.1.1"
+    "eslint-plugin-react": "^5.1.1",
+    "mocha": "^2.5.3",
+    "power-assert": "^1.4.1"
   }
 }
