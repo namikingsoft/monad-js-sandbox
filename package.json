@@ -5,8 +5,10 @@
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint src",
-    "start": "babel-node src/index.js",
-    "test": "npm run lint"
+    "start": "NODE_PATH=src babel-node src/index.js",
+    "mocha": "NODE_PATH=src mocha test/**/*.spec.js",
+    "test:watch": "npm run mocha -- --reporter min --watch",
+    "test": "npm run lint && npm run mocha"
   },
   "author": "",
   "license": "MIT",

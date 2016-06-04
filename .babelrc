@@ -3,6 +3,7 @@
     "es2015"
   ],
   "plugins": [
+    "babel-plugin-espower",
     "syntax-trailing-function-commas",
     "transform-class-properties",
     "transform-object-rest-spread",
