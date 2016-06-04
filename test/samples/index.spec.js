@@ -1,3 +1,4 @@
+// @flow
 import assert from 'power-assert';
 
 describe('index', () => {

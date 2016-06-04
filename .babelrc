@@ -6,6 +6,7 @@
     "babel-plugin-espower",
     "syntax-trailing-function-commas",
     "transform-class-properties",
+    "transform-flow-strip-types",
     "transform-object-rest-spread",
     "transform-runtime"
   ]
