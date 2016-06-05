@@ -43,7 +43,7 @@ describe('Identity', () => {
         .valueOf() === 3
       );
       assert(
-        doMonad(function* gen() {
+        doMonad(function*() {
           const value1 = yield new Identity(1);
           const value2 = yield new Identity(2);
           return new Identity(value1 + value2);
