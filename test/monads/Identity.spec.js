@@ -52,4 +52,21 @@ describe('Identity', () => {
       );
     });
   });
+
+  describe('monad rules', () => {
+    it('should be follow the rule 1', () => {
+      const f = x => Identity.unit(x * 2);
+      assert.deepEqual(Identity.unit(2).bind(f), f(2));
+    });
+    it('should be follow the rule 2', () => {
+      const m = Identity.unit(2);
+      assert.deepEqual(m.bind(Identity.unit), m);
+    });
+    it('should be follow the rule 3', () => {
+      const m = Identity.unit(2);
+      const f = x => Identity.unit(x * 2);
+      const g = x => Identity.unit(String(x));
+      assert.deepEqual(m.bind(f).bind(g), m.bind(x => f(x).bind(g)));
+    });
+  });
 });
