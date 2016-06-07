@@ -10,6 +10,12 @@ describe('Identity', () => {
     });
   });
 
+  describe('toString', () => {
+    it('should be return instance string', () => {
+      assert(`${new Identity(1)}` === 'Identity(1)');
+    });
+  });
+
   describe('bind', () => {
     it('should be return binded instance', () => {
       assert(
