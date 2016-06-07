@@ -10,12 +10,6 @@ describe('Identity', () => {
     });
   });
 
-  describe('toString', () => {
-    it('should be return instance string', () => {
-      assert(`${new Identity(1)}` === 'Identity(1)');
-    });
-  });
-
   describe('bind', () => {
     it('should be return binded instance', () => {
       assert(
@@ -32,6 +26,8 @@ describe('Identity', () => {
         )
         .toString() === 'Identity(3)'
       );
+    });
+    it('should be return binded instance using do method', () => {
       assert(
         doMonad(function*() {
           const value1 = yield new Identity(1);
