@@ -1,22 +1,14 @@
 // @flow
 import assert from 'power-assert';
-import Maybe, { Just, Nothing } from 'monads/Maybe';
 import doMonad from 'utils/doMonad';
+import Just, { Nothing } from 'monads/Maybe';
+import type { Maybe } from 'types/Monad';
 
 describe('Maybe', () => {
   describe('new', () => {
     it('should be return new instance', () => {
-      assert(new Maybe(1) instanceof Maybe);
       assert(new Just(1) instanceof Just);
-      assert(new Nothing instanceof Nothing);
-    });
-  });
-
-  describe('toString', () => {
-    it('should be return instance string', () => {
-      assert(`${new Maybe(1)}` === 'Maybe(1)');
-      assert(`${new Just(1)}` === 'Just(1)');
-      assert(`${new Nothing}` === 'Nothing');
+      assert(Nothing instanceof Nothing.constructor);
     });
   });
 
@@ -28,7 +20,7 @@ describe('Maybe', () => {
       }
       get(key: string): Maybe<T> {
         const value = this.map[key];
-        return value ? new Just(value) : new Nothing;
+        return value ? new Just(value) : Nothing;
       }
     }
     const map: SampleMap<number> = new SampleMap({
@@ -52,7 +44,7 @@ describe('Maybe', () => {
             )
           )
         ),
-        new Nothing,
+        Nothing,
       );
     });
     it('should be return binded instance using do method', () => {
@@ -71,14 +63,14 @@ describe('Maybe', () => {
           const z = yield map.get('key2');
           return new Just(x + y + z);
         }()),
-        new Nothing,
+        Nothing,
       );
     });
   });
 
   describe('monad rules', () => {
-    function unit<T>(value: T): Maybe<T> {
-      return new Maybe(value);
+    function unit<T>(value: T): Just<T> {
+      return new Just(value);
     }
     it('should be follow the rule 1', () => {
       const f = x => unit(x * 2);

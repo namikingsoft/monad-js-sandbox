@@ -1,31 +1,27 @@
 // @flow
 /* eslint-disable no-unused-vars */
+import SingleValue from 'utils/SingleValue';
 import type { Monad } from 'types/Monad';
 
-export default class Maybe<T> {
-  _value: T;
-
-  constructor(value: T) {
-    this._value = value;
-  }
-
-  toString(): string {
-    const str = this.constructor.name;
-    return str + (this._value !== undefined ? `(${this._value})` : '');
+export default class Just<T> extends SingleValue<T> {
+  valueOf(): any {
+    return this;
   }
 
   bind<U>(transform: (value: T) => Monad<U>): Monad<U> {
-    return transform(this._value);
+    return transform(super.valueOf());
   }
 }
 
-export class Just<T> extends Maybe<T> {}
-export class Nothing extends Maybe<any> {
-  constructor() {
-    super((undefined: any));
-  }
+export const Nothing = (() => {
+  class Nothing extends Just<any> {
+    constructor() {
+      super((undefined: any));
+    }
 
-  bind<U>(transform: (value: any) => Monad<U>): Monad<U> {
-    return this;
+    bind<U>(transform: (value: any) => Monad<U>): Monad<U> {
+      return this;
+    }
   }
-}
+  return new Nothing;
+})();
