@@ -1,5 +1,5 @@
 // @flow
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-unused-vars, no-shadow */
 import SingleValue from 'utils/SingleValue';
 import type { Monad } from 'types/Monad';
 
