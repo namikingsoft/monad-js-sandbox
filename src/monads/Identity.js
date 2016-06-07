@@ -1,11 +1,10 @@
 // @flow
-import Monad from 'monads/Monad';
+import type { Monad } from 'types/Monad';
 
-class PrivateIdentity<T> extends Monad<T> {
+class PrivateIdentity<T> {
   _value: T;
 
   constructor(value: T) {
-    super();
     this._value = value;
   }
 
@@ -26,9 +25,5 @@ export default class Identity<T> extends PrivateIdentity<T> {
 
   bind<U>(transform: (value: T) => Monad<U>): Monad<U> {
     return transform(super.valueOf());
-  }
-
-  static unit<U>(value: U): Monad<U> {
-    return new Identity(value);
   }
 }

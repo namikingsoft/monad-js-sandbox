@@ -1,7 +1,7 @@
 // @flow
 import assert from 'power-assert';
 import Identity from 'monads/Identity';
-import { doMonad } from 'monads/Monad';
+import doMonad from 'utils/doMonad';
 
 describe('Identity', () => {
   describe('new', () => {
@@ -10,24 +10,18 @@ describe('Identity', () => {
     });
   });
 
-  describe('unit', () => {
-    it('should be return new instance', () => {
-      assert(Identity.unit(1) instanceof Identity);
-    });
-  });
-
   describe('bind', () => {
     it('should be return binded instance', () => {
       assert(
-        Identity.unit(1).bind(x =>
-          Identity.unit(`num:${x}`)
+        new Identity(1).bind(x =>
+          new Identity(`num:${x}`)
         )
         .toString() === 'Identity(num:1)'
       );
       assert(
-        Identity.unit(1).bind(x =>
-          Identity.unit(2).bind(y =>
-            Identity.unit(x + y)
+        new Identity(1).bind(x =>
+          new Identity(2).bind(y =>
+            new Identity(x + y)
           )
         )
         .toString() === 'Identity(3)'
@@ -44,18 +38,21 @@ describe('Identity', () => {
   });
 
   describe('monad rules', () => {
+    function unit<T>(value: T): Identity<T> {
+      return new Identity(value);
+    }
     it('should be follow the rule 1', () => {
-      const f = x => Identity.unit(x * 2);
-      assert.deepEqual(Identity.unit(2).bind(f), f(2));
+      const f = x => unit(x * 2);
+      assert.deepEqual(unit(2).bind(f), f(2));
     });
     it('should be follow the rule 2', () => {
-      const m = Identity.unit(2);
-      assert.deepEqual(m.bind(Identity.unit), m);
+      const m = unit(2);
+      assert.deepEqual(m.bind(unit), m);
     });
     it('should be follow the rule 3', () => {
-      const m = Identity.unit(2);
-      const f = x => Identity.unit(x * 2);
-      const g = x => Identity.unit(String(x));
+      const m = unit(2);
+      const f = x => unit(x * 2);
+      const g = x => unit(String(x));
       assert.deepEqual(m.bind(f).bind(g), m.bind(x => f(x).bind(g)));
     });
   });
