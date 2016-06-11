@@ -8,6 +8,14 @@ export default class List<T> extends SingleValue<Generator<T, void, void>> {
     return this;
   }
 
+  toString(): string {
+    const items: Array<T> = [];
+    for (const item of super.valueOf()) {
+      items.push(item);
+    }
+    return `List(${items.join(',')})`;
+  }
+
   bind<U>(transform: (value: T) => Monad<U>): Monad<U> {
     const items = super.valueOf();
     return new List(function*() {
