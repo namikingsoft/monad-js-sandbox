@@ -9,14 +9,18 @@ function* bind(list, transform) {
 }
 
 describe('List', () => {
-  let list: List<number>;
+  let list1: List<number>;
+  let list2: List<number>;
 
   beforeEach(() => {
-    list = new List(function*() {
+    list1 = new List(function*() {
       yield 1;
       yield 2;
       yield 3;
-    });
+    }());
+    list2 = new List(function*() {
+      for (let i = 0; ; i++) yield i;
+    }());
   });
 
   describe('try', () => {
@@ -36,7 +40,21 @@ describe('List', () => {
 
   describe('new', () => {
     it('should be return new instance', () => {
-      assert(list instanceof List);
+      assert(list1 instanceof List);
+      assert(list2 instanceof List);
+    });
+  });
+
+  describe('valueOf', () => {
+    it('should be return self', () => {
+      assert(list1 === list1.valueOf());
+      assert(list2 === list2.valueOf());
+    });
+  });
+
+  describe('toString', () => {
+    it('should be return new instance', () => {
+      assert(list1.toString() === 'List(1,2,3)');
     });
   });
 });
