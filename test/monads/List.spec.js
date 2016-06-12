@@ -63,10 +63,43 @@ describe('List', () => {
       assert(
         list1.bind(x =>
           new List(function*() {
-            yield x;
-            yield x + 1;
+            yield x * 10;
+            yield x * 10 + 1;
           })
-        ).toString() === 'List(1,2,2,3,3,4)'
+        )
+        .toString() === 'List(10,11,20,21,30,31)'
+      );
+    });
+  });
+
+  describe('monad rules', () => {
+    function unit<T>(value: T): List<T> {
+      return new List(function*() { yield value; });
+    }
+    it('should be follow the rule 1', () => {
+      const f = x => unit(x * 2);
+      assert(
+        unit(2).bind(f).toString()
+        ===
+        f(2).toString()
+      );
+    });
+    it('should be follow the rule 2', () => {
+      const m = unit(2);
+      assert(
+        m.bind(unit).toString()
+        ===
+        m.toString()
+      );
+    });
+    it('should be follow the rule 3', () => {
+      const m = unit(2);
+      const f = x => unit(x * 2);
+      const g = x => unit(String(x));
+      assert(
+        m.bind(f).bind(g).toString()
+        ===
+        m.bind(x => f(x).bind(g)).toString()
       );
     });
   });
