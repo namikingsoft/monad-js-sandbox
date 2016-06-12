@@ -17,10 +17,10 @@ describe('List', () => {
       yield 1;
       yield 2;
       yield 3;
-    }());
+    });
     list2 = new List(function*() {
       for (let i = 0; ; i++) yield i;
-    }());
+    });
   });
 
   describe('try', () => {
@@ -55,6 +55,19 @@ describe('List', () => {
   describe('toString', () => {
     it('should be return new instance', () => {
       assert(list1.toString() === 'List(1,2,3)');
+    });
+  });
+
+  describe('bind', () => {
+    it('should be return binded instance', () => {
+      assert(
+        list1.bind(x =>
+          new List(function*() {
+            yield x;
+            yield x + 1;
+          })
+        ).toString() === 'List(1,2,2,3,3,4)'
+      );
     });
   });
 });
